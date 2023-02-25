@@ -1,14 +1,18 @@
 package com.example.weatherapp
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.JsonRequest
+
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
+import kotlin.math.ceil
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val lat = intent.getStringExtra("lat")
         val long = intent.getStringExtra("long")
-        Toast.makeText(this, "lat: $lat ---long: $long", Toast.LENGTH_LONG).show()
         getJsonData(lat,long)
 
         
@@ -26,14 +29,38 @@ class MainActivity : AppCompatActivity() {
     private fun getJsonData(lat: String?, long: String?){
         val API_KEY = "5e02eb37a56b621ba3946228bd02411a"
         val queue = Volley.newRequestQueue(this)
-        val url = "https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${API_KEY}"
+        val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${API_KEY}"
         val jsonRequest = JsonObjectRequest(
             Request.Method.GET, url, null, { response ->
-                Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show()
+                setValues(response)
             },
-            { Toast.makeText(this, "ERROR", Toast.LENGTH_LONG).show() })
+            { Log.d("Main Activity", "Error") })
 
          queue.add(jsonRequest)
+    }
+
+
+    private fun setValues(response: JSONObject) {
+            tv_city_name.text = response.getString("name")
+            var lat = response.getJSONObject("coord").getString("lat")
+            var long = response.getJSONObject("coord").getString("lon")
+            tv_lat_long.text = "${lat} , ${long}"
+            tv_weather.text = response.getJSONArray("weather").getJSONObject(0).getString("main")
+            var temp = response.getJSONObject("main").getString("temp")
+            temp = (((temp).toFloat()-273.15)).toInt().toString()
+            tv_temperature.text = "${temp}°C"
+            var minTemp = response.getJSONObject("main").getString("temp_min")
+            minTemp = (((minTemp).toFloat()-273.15)).toInt().toString()
+            tv_min_temp.text = "${minTemp}°C"
+            var maxTemp = response.getJSONObject("main").getString("temp_max")
+            maxTemp = (ceil((maxTemp).toFloat()-273.15)).toInt().toString()
+            tv_max_temp.text = "${maxTemp}°C"
+            tv_pressure.text = response.getJSONObject("main").getString("pressure")
+            tv_humidity.text = response.getJSONObject("main").getString("humidity")+"%"
+            tv_wind_speed.text = response.getJSONObject("wind").getString("speed")
+            tv_wind_angle.text = "Degree : " + response.getJSONObject("wind").getString("deg") + "°"
+            tv_gust.text = "Gust : " + response.getJSONObject("wind").getString("gust")
+
     }
 
 

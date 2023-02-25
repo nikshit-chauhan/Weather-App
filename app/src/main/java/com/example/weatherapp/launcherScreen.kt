@@ -69,7 +69,7 @@ class launcherScreen : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
 
-            var locationRequest = Builder(100L)
+            var locationRequest = Builder(1000L)
             locationRequest.setQuality(LocationRequest.QUALITY_HIGH_ACCURACY)
             locationRequest.setIntervalMillis(0)
             locationRequest.setMaxUpdateDelayMillis(0)
