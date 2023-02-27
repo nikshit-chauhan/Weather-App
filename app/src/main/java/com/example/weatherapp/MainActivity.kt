@@ -1,14 +1,19 @@
 package com.example.weatherapp
 
 
+import android.location.Geocoder
+import android.location.Geocoder.GeocodeListener
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
+import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_day_main.*
 import org.json.JSONObject
+import java.util.*
 import kotlin.math.ceil
 
 
@@ -16,17 +21,35 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_day_main)
-        val lat = intent.getStringExtra("lat")
-        val long = intent.getStringExtra("long")
+
+        var lat = intent.getStringExtra("lat")
+        var long = intent.getStringExtra("long")
         getJsonData(lat,long)
+
+        btn_search.setOnClickListener {
+            Log.d("location button", "search button pressed")
+            searchCity()
+        }
+
+
         
+    }
+
+    private fun searchCity() {
+        var cityName = tv_search_box.text.toString()
+        var geocoder = Geocoder(this, Locale.getDefault())
+        var addresses = geocoder.getFromLocationName(cityName,2)
+        var address = addresses?.get(0)
+        var lat = address?.latitude.toString()
+        var long = address?.longitude.toString()
+        getJsonData(lat,long)
     }
 
     private fun getJsonData(lat: String?, long: String?){
         val API_KEY = "5e02eb37a56b621ba3946228bd02411a"
-        val queue = Volley.newRequestQueue(this)
-        val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${API_KEY}"
-        val jsonRequest = JsonObjectRequest(
+        var queue = Volley.newRequestQueue(this)
+        var url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${API_KEY}"
+        var jsonRequest = JsonObjectRequest(
             Request.Method.GET, url, null, { response ->
                 setValues(response)
             },
@@ -66,11 +89,7 @@ class MainActivity : AppCompatActivity() {
 
             tv_wind_angle.text = "Degree : " + response.getJSONObject("wind").getString("deg") + "°"
 
-        if(response.getJSONObject("wind").getString("gust") != null){
-                tv_gust.text = "Gust : " + response.getJSONObject("wind").getString("gust")
-            }else{
-                tv_gust.text = "0"
-        }
+
     }
 
 

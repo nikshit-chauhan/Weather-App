@@ -17,6 +17,42 @@
         android:layout_gravity="bottom"
         android:orientation="vertical"
         >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="100dp">
+
+            <EditText
+                android:id="@+id/tv_search_box"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/search_area"
+                android:hint="Location"
+                android:padding="12dp"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.186" />
+
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circular_btn"
+                android:text="Search"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_search_box"
+                app:layout_constraintHorizontal_bias="0.054"
+                app:layout_constraintStart_toStartOf="@+id/tv_search_box"
+                app:layout_constraintTop_toBottomOf="@+id/tv_search_box" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -246,14 +282,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Wind Angle: ----"
-                        android:textStyle="bold"
-                        android:layout_marginStart="20dp"
-                        android:textColor="@android:color/black"/>
-                    <TextView
-                        android:id="@+id/tv_gust"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gust: --"
                         android:textStyle="bold"
                         android:layout_marginStart="20dp"
                         android:textColor="@android:color/black"/>
