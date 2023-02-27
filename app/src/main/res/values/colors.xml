@@ -11,4 +11,5 @@
     <color name="nightBackground">#B796F1</color>
     <color name="subFont">#E35449</color>
     <color name="cardBg">#F6DE95</color>
+    <color name="btnColor">#1C9CD6</color>
 </resources>

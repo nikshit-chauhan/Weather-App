@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
-
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_day_main.*
-
 import org.json.JSONObject
 import kotlin.math.ceil
 
@@ -21,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         val lat = intent.getStringExtra("lat")
         val long = intent.getStringExtra("long")
         getJsonData(lat,long)
-
         
     }
 
