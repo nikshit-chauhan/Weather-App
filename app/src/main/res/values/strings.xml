@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">WeatherApp</string>
+    <string name="app_name">SkyWatch</string>
     <string name="get_started_text">This is real time weather application which provides the current climate details of current GPS location as well as searched places which includes: Latitude, Longitude, Temperature, Minimum Temperature, Maximum Temperature, Pressure, Humidity, Sky Type, Wind Speed, Wind Angle and Gust.</string>
 </resources>
